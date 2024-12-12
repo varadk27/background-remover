@@ -6,8 +6,6 @@ opencv-python-headless
 pillow
 rembg
 aiohttp
-pytest
-pytest-asyncio
 pydantic
 onnxruntime
 cloudinary
