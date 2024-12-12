@@ -106,8 +106,3 @@ async def remove_background(request: ImageRequest):
     except Exception as e:
         logger.error(f"Error processing image: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
-    
-    
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))  # Default to port 8000 if not set
-    uvicorn.run("app.main:app", host="0.0.0.0", port=port, reload=True)
