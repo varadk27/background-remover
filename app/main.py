@@ -58,10 +58,10 @@ async def remove_background(request: ImageRequest):
             raise HTTPException(status_code=400, detail="Invalid bounding box coordinates")
 
         # Process the image
-        processed_image_path = await image_processor.process_image(request.image_url, request.bounding_box)
+        processed_image_data = await image_processor.process_image(request.image_url, request.bounding_box)
 
-        # Simulate image upload
-        processed_image_url = await storage_service.upload_image(processed_image_path)
+        # Upload directly to Cloudinary
+        processed_image_url = await storage_service.upload_image(processed_image_data)
 
         return ImageResponse(
             original_image_url=request.image_url,
@@ -71,3 +71,36 @@ async def remove_background(request: ImageRequest):
     except Exception as e:
         logger.error(f"Error processing image: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
+
+
+
+
+
+
+
+# @app.post("/remove-background", response_model=ImageResponse)
+# async def remove_background(request: ImageRequest):
+#     """Remove background from an image."""
+#     try:
+#         # Validate image URL
+#         if not await validate_image_url(request.image_url):
+#             raise HTTPException(status_code=400, detail="Invalid or inaccessible image URL")
+
+#         # Validate coordinates
+#         if not validate_coordinates(request.bounding_box):
+#             raise HTTPException(status_code=400, detail="Invalid bounding box coordinates")
+
+#         # Process the image
+#         processed_image_path = await image_processor.process_image(request.image_url, request.bounding_box)
+
+#         # Simulate image upload
+#         processed_image_url = await storage_service.upload_image(processed_image_path)
+
+#         return ImageResponse(
+#             original_image_url=request.image_url,
+#             processed_image_url=processed_image_url
+#         )
+
+#     except Exception as e:
+#         logger.error(f"Error processing image: {str(e)}")
+#         raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
